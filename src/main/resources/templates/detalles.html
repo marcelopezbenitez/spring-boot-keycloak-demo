@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head th:include="layout :: headerFragment">
+  <title>Control Evento</title></head>
+<body>
+<div class="container text-center justify-content-md-center">
+  <div class="row justify-content-md-center">
+    <div class="col-4">
+      <h2>Detalles entrada:</h2>
+    </div>
+  </div>
+  <div class="row justify-content-md-center">
+    <div class="col-4">
+      <ul class="list-group">
+        <li class="list-group-item">
+          <input class="form-check-input me-1" type="radio" name="tipo-busqueda"
+                 th:field="*{tipoBusqueda}" value="socio" id="socio" checked>
+          <label class="form-check-label" for="socio">Numero Socio</label>
+        </li>
+        <li class="list-group-item">
+          <input class="form-check-input me-1" type="radio" name="tipo-busqueda"
+                 th:field="*{tipoBusqueda}" value="cedula" id="cedula">
+          <label class="form-check-label" for="cedula">Numero cedula</label>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-4">
+      <input class="form-control" type="text" id="input-busqueda" placeholder="3860204" th:field="*{valor}">
+      <button type="submit" value="submit" class="form-control btn btn-primary">Buscar</button>
+    </div>
+  </div>
+</div>
+<!--  <a href="/logout">Logout</a>-->
+<!-- container -->
+</body>
+</html>
