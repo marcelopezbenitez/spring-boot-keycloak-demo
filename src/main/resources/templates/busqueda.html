@@ -3,37 +3,39 @@
 <head th:include="layout :: headerFragment">
   <title>Control Evento</title></head>
 <body>
-<form action="#" th:action="@{/detalles}" th:object="${busquedaReq}" method="post" class="needs-validation was-validated" novalidate>
-
+<form action="#" th:action="@{/entradas/detalles}" th:object="${busquedaReq}" method="post" >
   <div class="container text-center justify-content-md-center">
     <div class="row justify-content-md-center">
-      <div class="col-4">
+      <div class="col">
         <h2>Buscar por:</h2>
       </div>
     </div>
     <div class="row justify-content-md-center">
-      <div class="col-4">
-        <ul class="list-group">
-          <li class="list-group-item">
-            <input class="form-check-input me-1" type="radio" name="tipo-busqueda"
-                   th:field="*{tipoBusqueda}" value="socio" id="socio" checked>
-            <label class="form-check-label" for="socio">Numero Socio</label>
-          </li>
-          <li class="list-group-item">
-            <input class="form-check-input me-1" type="radio" name="tipo-busqueda"
-                   th:field="*{tipoBusqueda}" value="cedula" id="cedula">
-            <label class="form-check-label" for="cedula">Numero cedula</label>
-          </li>
-        </ul>
+      <div class="col">
+        <div class="btn-group-vertical" role="group" aria-label="Vertical radio toggle button group">
+          <input type="radio" class="btn-check" value="socio"
+                 th:field="*{tipoBusqueda}" name="tipo-busqueda" id="socio" autocomplete="off" checked>
+          <label class="btn btn-outline-success" for="socio">Nro Socio</label>
+          <input type="radio" class="btn-check" value="cedula"
+                 th:field="*{tipoBusqueda}" name="tipo-busqueda" id="cedula" autocomplete="off">
+          <label class="btn btn-outline-success" for="cedula">Nro Cedula</label>
+        </div>
       </div>
     </div>
     <div class="row justify-content-center">
-      <div class="col-4">
-        <input class="form-control" type="text" id="input-busqueda" th:field="*{valor}" required>
+      <div class="col">
+        <input class="form-control busqueda" type="text" id="input-busqueda" th:field="*{valor}" required>
         <div class="invalid-feedback">
           Please provide a valid city.
         </div>
-        <button type="submit" value="submit" class="form-control btn btn-primary">Buscar</button>
+        <button type="submit" value="submit" class="form-control btn btn-success">Buscar</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="alert alert-danger" th:attr="hidden=${error==null ? 'true' : 'false'}" role="alert">
+          No se encontraron resultados.
+        </div>
       </div>
     </div>
   </div>

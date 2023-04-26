@@ -18,6 +18,9 @@ public class EntradasRepository extends JdbcDaoSupport {
             "SELECT * FROM CU.CUSEG_DATOS_ENTRADAS " +
                     "WHERE (NRO_SOCIO = ? OR ? IS NULL) " +
                     "AND (CEDULA_SOCIO = ? OR ? IS NULL)";
+
+    private static final String SQL_UPDATE_ENTRADAS = "UPDATE CU.CUSEG_DATOS_ENTRADAS  " +
+            "SET CANTIDAD_USADA=? WHERE NRO_SOCIO = ?";
     public EntradasRepository(DataSource dataSource){
         setDataSource(dataSource);
     }
@@ -33,6 +36,18 @@ public class EntradasRepository extends JdbcDaoSupport {
         }catch (DataAccessException e){
             logger.info("Ocurrio un error al obtener la entradas...");
             return null;
+        }
+    }
+
+    public boolean usarEntrdas(String nroSocio, int cantidad) {
+        try{
+            int res = getJdbcTemplate().update(SQL_UPDATE_ENTRADAS,
+                    new Object[]{cantidad, Integer.parseInt(nroSocio)},
+                    new int[]{Types.BIGINT, Types.BIGINT});
+            return res>0;
+        }catch (DataAccessException e){
+            logger.error("Ocurrio un error al intentar canjear las entradas");
+            return false;
         }
     }
 

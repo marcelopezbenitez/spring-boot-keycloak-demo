@@ -34,8 +34,13 @@ class SecurityConfig {
                 .and()
                 .logout()
                 .addLogoutHandler(keycloakLogoutHandler)
-                .logoutSuccessUrl("/");
+                .logoutSuccessUrl("/entradas");
         http.oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
         return http.build();
     }
+
+//    @Bean
+//    public WebSecurity webSecurity(WebSecurity webSecurity){
+//        webSecurity
+//    }
 }

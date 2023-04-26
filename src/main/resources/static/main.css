@@ -1,0 +1,14 @@
+.busqueda {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.modal-error {
+    background-color: #f8d7da;
+    color: #58151c;
+}
+
+.modal-success {
+    background-color: #d1e7dd;
+    color: #0a3622;
+}

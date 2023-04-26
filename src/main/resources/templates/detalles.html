@@ -3,36 +3,139 @@
 <head th:include="layout :: headerFragment">
   <title>Control Evento</title></head>
 <body>
-<div class="container text-center justify-content-md-center">
-  <div class="row justify-content-md-center">
-    <div class="col-4">
-      <h2>Detalles entrada:</h2>
-    </div>
-  </div>
-  <div class="row justify-content-md-center">
-    <div class="col-4">
-      <ul class="list-group">
-        <li class="list-group-item">
-          <input class="form-check-input me-1" type="radio" name="tipo-busqueda"
-                 th:field="*{tipoBusqueda}" value="socio" id="socio" checked>
-          <label class="form-check-label" for="socio">Numero Socio</label>
-        </li>
-        <li class="list-group-item">
-          <input class="form-check-input me-1" type="radio" name="tipo-busqueda"
-                 th:field="*{tipoBusqueda}" value="cedula" id="cedula">
-          <label class="form-check-label" for="cedula">Numero cedula</label>
-        </li>
-      </ul>
+
+<div class="container form-control">
+  <div class="row justify-content-center">
+    <div class="col">
+      <h2>Detalles busqueda</h2>
     </div>
   </div>
   <div class="row justify-content-center">
-    <div class="col-4">
-      <input class="form-control" type="text" id="input-busqueda" placeholder="3860204" th:field="*{valor}">
-      <button type="submit" value="submit" class="form-control btn btn-primary">Buscar</button>
+    <div class="col-9">
+      <div class="">
+        <label for="socio-name" class="col-form-label-lg">Nombre socio</label>
+        <input disabled type="text" class="form-control" id="socio-name" readonly="readonly"
+               th:value="${entrada.nombre}">
+      </div>
+    </div>
+    <div class="col-3">
+      <div class="">
+        <label for="fecha" class="col-form-label-lg">Fecha compra</label>
+        <input disabled type="text" class="form-control" id="fecha" readonly="readonly"
+               th:value="${entrada.fechaCompra}">
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-6">
+      <div class="">
+        <label for="ci" class="col-form-label-lg">Cedula</label>
+        <input disabled type="text" class="form-control" id="ci" readonly="readonly" th:value="${entrada.nroCi}">
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="">
+        <label for="nro-socio" class="col-form-label-lg">Numero socio</label>
+        <input disabled type="text" class="form-control" id="nro-socio" readonly="readonly"
+               th:value="${entrada.nroSocio}">
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-6">
+      <div class="">
+        <label for="cant-comprada" class="col-form-label-lg">Cantidad comprada</label>
+        <input disabled type="text" class="form-control" id="cant-comprada" readonly="readonly"
+               th:value="${entrada.catidadComprada}">
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="mb-3">
+        <label for="cant-usada" class="col-form-label-lg">Cantidad usada</label>
+        <input disabled type="text" class="form-control" id="cant-usada" readonly="readonly"
+               th:value="${entrada.cantidadUsada}">
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-6">
+      <label for="cantidad-selec" class="form-label">Seleccione la cantidad de personas:</label>
+      <div class="input-group mb-3">
+        <span th:onclick="remove_value()" id="span-remove" class="input-group-text">
+          <i class="bi bi-person-fill-dash"></i>
+        </span>
+        <input id="cantidad-selec" type="number" class="form-control text-center"
+               aria-label="Amount (to the nearest dollar)" readonly>
+        <span th:onclick="add_value()" id="span-add" class="input-group-text">
+          <i class="bi bi-person-fill-add"></i>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-6 align-content-start">
+      <button th:onclick="volver_atras()" type="button" value="submit"
+              class="form-control btn btn-outline-secondary">Volver</button>
+    </div>
+    <div class="col-6 align-content-end">
+      <button th:onclick="paso_previo()" type="button" value="submit"
+              class="form-control btn btn-outline-success">Canjear</button>
+
     </div>
   </div>
 </div>
-<!--  <a href="/logout">Logout</a>-->
-<!-- container -->
+<!-- Modal 1 -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Esta seguro ?</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="modal-body">
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button th:onclick="canjear_entradas()" type="button" class="btn btn-success">Guardar cambios</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Fin Modal 1 -->
+<!-- Modal 2 -->
+<div class="modal fade" id="exampleModalToggle2" tabindex="-1" aria-labelledby="exampleModalToggleLabel2" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" id="modal-header-2">
+        <h1 class="modal-title fs-5" id="modal-title-2"></h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="modal-body-2">
+
+      </div>
+      <div class="modal-footer">
+        <button th:onclick="refresh()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--<div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="modal-title-2"></h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="modal-body-2">
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>-->
+<!--Fin Modal 2-->
 </body>
 </html>
+<script th:src="@{/main.js}" type="application/javascript"></script>
